@@ -1,7 +1,7 @@
 {
     "DEBUG": false,
     "TIMEOUT": 300,
-    "ToolInvocation": "/home/dekel/GPMC/bin/gpmc -mode=1",
+    "ToolInvocation": "/Quokka/GPMC/bin/gpmc -mode=1",
     "GetResult": "exact.double.prec-sci.(.+?)\\\\nc s"
   }
   

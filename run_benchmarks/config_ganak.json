@@ -1,7 +1,7 @@
 {
     "DEBUG": false,
     "TIMEOUT": 2,
-    "ToolInvocation": "/Users/meij/Desktop/coding/Quokka/Untitled/GPMC/bin/ganak --mode=6",
+    "ToolInvocation": "/Quokka/GPMC/bin/ganak --mode=6",
     "GetResult": "c s exact arb cpx (.+?)\\\\nc",
     "FPE"       : 1e-12 
   }
