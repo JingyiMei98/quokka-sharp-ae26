@@ -1,0 +1,5 @@
+SliQSimPath = "/Users/meij/Desktop/coding/SliQSim/SliQSim"
+SliQECPath  = "/Users/meij/Desktop/coding/SliQEC/SliQEC"
+QuaismodoPath = "/Users/meij/Desktop/coding/Quasimodo/run/sim_quasimodo.py"
+ConfigGPMC  = "/Users/meij/Desktop/coding/Quokka_dev/Untitled/quokka-sharp-artifacts/run_benchmarks/config_gpmc.json"
+ConfigGanak = "/Users/meij/Desktop/coding/Quokka_dev/Untitled/quokka-sharp-artifacts/run_benchmarks/config_ganak.json"
