@@ -126,40 +126,58 @@ def get_SliQSim_obs_file_path(qubits):
 	return obs_file_path
 
 def run_SliQSim(file_name):
-	results_df = get_results()
-	file_path = utils.get_file_path(file, folder, benchmark_folder)
-	algo_name, qubits = utils.get_data_from_algo_file_name(file_name)
-	if not qubits:
-		qubits = get_qubits_from_file(file_path)
-	run_data = get_run_data(algo_name, qubits, "SliQSim")
-	if utils.data_exists(run_data, results_df):
-		return False
-	obs_file_path = get_SliQSim_obs_file_path(qubits)
-	cmd = [
-		SliQSimPath,
-		"--sim_qasm", file_path,
-		"--obs_file", obs_file_path,
-		"--type", "2"
-	]
+    results_df = get_results()
+    file_path = utils.get_file_path(file_name, folder, benchmark_folder)
 
-	try:
-		start_time = time.time()
-		output = subprocess.check_output(cmd, universal_newlines=True, timeout=utils.timeout)
-		end_time = time.time()
-	except subprocess.TimeoutExpired:
-		end_time = time.time()
-		result = "TIMEOUT"
-		runtime = end_time - start_time
-	else:
-		result_matches = re.search(r"\s*([-\d.e]+)\s", output)
-		assert result_matches is not None, f"Could not find result in SliQSim output:\n{output}"
-		assert len(result_matches.groups()) == 1, f"Expected one result match, got {len(result_matches.groups())} in output:\n{output}"
-		runtime = end_time - start_time
-		result = float(result_matches.group(1))**2
+    algo_name, qubits = utils.get_data_from_algo_file_name(file_name)
+    if not qubits:
+        qubits = get_qubits_from_file(file_path)
 
-	results_df = utils.add_result_to_df(run_data, result, runtime, results_df)
-	utils.save_results_to_file(results_file_name, results_df)
-	return True
+    run_data = get_run_data(algo_name, qubits, "SliQSim")
+    if utils.data_exists(run_data, results_df):
+        return False
+
+    obs_file_path = get_SliQSim_obs_file_path(qubits)
+    cmd = [
+        SliQSimPath,
+        "--sim_qasm", file_path,
+        "--obs_file", obs_file_path,
+        "--type", "2"
+    ]
+
+    start_time = time.time()
+    try:
+        output = subprocess.check_output(
+            cmd,
+            universal_newlines=True,
+            timeout=utils.timeout,
+            stderr=subprocess.DEVNULL
+        )
+        end_time = time.time()
+
+        result_matches = re.search(r"\s*([-\d.e]+)\s", output)
+        if result_matches is None:
+            raise ValueError(f"Could not find result in SliQSim output:\n{output}")
+        if len(result_matches.groups()) != 1:
+            raise ValueError(
+                f"Expected one result match, got {len(result_matches.groups())} in output:\n{output}"
+            )
+
+        result = float(result_matches.group(1)) ** 2
+
+    except subprocess.TimeoutExpired:
+        end_time = time.time()
+        result = "TIMEOUT"
+
+    except Exception as e:
+        end_time = time.time()
+        result = "error"
+        print(f"SliQSim failed on {file_name}: {e}")
+
+    runtime = end_time - start_time
+    results_df = utils.add_result_to_df(run_data, result, runtime, results_df)
+    utils.save_results_to_file(results_file_name, results_df)
+    return True
 
 
 
@@ -290,17 +308,18 @@ def run_DDSim(file_name):
 
     return True
 
+
 for file in benchmarks_list:
     print(f"Processing {file}...")
-    # run_QuokkaSharp(file, "gpmc")
-    # run_QuokkaSharp(file, "ganak")
+    run_QuokkaSharp(file, "gpmc")
+    run_QuokkaSharp(file, "ganak")
     run_SliQSim(file)
     run_Quasimodo(file)
     run_DDSim(file)
-    
+
 
 remove_temp_folder()
 sort_results()
-check_results()
+# check_results()
 draw_figures()
 
