@@ -4,8 +4,8 @@
 run_benchmarks/.DS_Store
 run_benchmarks/.DS_Store
 run_benchmarks/.DS_Store
-
-run_benchmarks/core
-core
-core.*
-*.bak
+run_benchmarks/__pycache__/utils.cpython-311.pyc
+run_benchmarks/__pycache__/OtherToolPath.cpython-311.pyc
+run_benchmarks/config_gpmc.json
+run_benchmarks/OtherToolPath.py
+run_benchmarks/config_ganak.json

@@ -9,18 +9,43 @@ from OtherToolPath import SliQECPath, ConfigGPMC, ConfigGanak
 import quokka_sharp as qk
 import quokka_sharp.config as qc
 
+import os
+import argparse
+import utils
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "-b", "--benchlist",
+    default="benchlist-eq-phaseshift.txt",
+    help="Benchmark list file, e.g. benchlist-eq-phaseshift.txt",
+)
+parser.add_argument(
+    "-m", "--modifications",
+    nargs="+",
+    default=["shift4"],
+    help="Modification folders to run, e.g. shift4 or opt gm",
+)
+args = parser.parse_args()
 
 benchmark_folder = os.path.join("algorithm")
 
-benchmarks_list = utils.get_benchmark_list_from_file("benchlist-eq-phaseshift.txt")
+benchmarks_list = utils.get_benchmark_list_from_file(args.benchlist)
+benchmarks_list.sort()
 
-results_file_name = "test.csv"
 df_columns = ["modification", "qubits", "algo", "tool", "result", "time"]
 
-# modifications = ["opt", "gm"]
-modifications = ["shift4"]
-# modifications = ["gm"]
-# quokka_bases = ["comp", "pauli"]
+modifications = args.modifications
+
+benchlist_base = os.path.splitext(os.path.basename(args.benchlist))[0]
+mods_base = "_".join(modifications)
+results_file_name = f"compare_eqcheck_{benchlist_base}_{mods_base}.csv"
+
+print("Benchlist:", args.benchlist)
+print("Benchmarks:", benchmarks_list)
+print("Modifications:", modifications)
+print("Results file:", results_file_name)
+
+
 quokka_bases = [ "comp"]
 quokka_checks = {
 	"comp": "cyclic",

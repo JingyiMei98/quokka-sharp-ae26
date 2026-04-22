@@ -1,7 +1,7 @@
 {
-    "DEBUG": false,
+    "DEBUG": true,
     "TIMEOUT": 2,
-    "ToolInvocation": "/Quokka/GPMC/bin/gpmc -mode=1",
+    "ToolInvocation": "/Users/meij/Desktop/coding/Quokka_dev/Untitled/GPMC/bin/gpmc -mode=1",
     "D4ToolInvocation": "",
     "GetResult": "exact.double.prec-sci.(.+?)\\\\nc s",
     "FPE"       : 1e-12 
