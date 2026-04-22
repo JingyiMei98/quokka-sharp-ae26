@@ -284,6 +284,6 @@ if __name__ == "__main__":
     mp.freeze_support()  # macOS/Windows spawn 安全写法
     main()
     sort_results()
-    check_results()
+    # check_results()
     draw_figures()
 

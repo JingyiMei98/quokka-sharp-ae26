@@ -205,7 +205,7 @@ def run_Quasimodo(file_name):
 		return False
 
 	cmd = [
-		"python3.11",
+		"python3.10",
 		QuaismodoPath,
 		"-f", file_path
   	]

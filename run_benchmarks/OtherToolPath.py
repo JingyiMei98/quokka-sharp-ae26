@@ -1,5 +1,5 @@
 SliQSimPath = "/Quokka/SliQSim/SliQSim"
 SliQECPath  = "/Quokka/SliQEC/SliQEC"
-QuaismodoPath = "/Quokka/Quasimodo/run/sim_quasimodo.py"
+QuaismodoPath = "/Quokka/Quasimodo/python_pkg/sim_quasimodo.py"
 ConfigGPMC  = "/Quokka/quokka-sharp-ae26/run_benchmarks/config_gpmc.json"
 ConfigGanak = "/Quokka/quokka-sharp-ae26/run_benchmarks/config_ganak.json"
