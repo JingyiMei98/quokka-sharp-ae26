@@ -306,7 +306,7 @@ def main():
 		
 
 if __name__ == "__main__":
-    mp.freeze_support()  # macOS/Windows spawn 安全写法
+    mp.freeze_support()  
     main()
     sort_results()
     # check_results()
