@@ -13,14 +13,44 @@ from mqt.core import load
 from mqt.ddsim import CircuitSimulator
 # Evaluate per algorithm
 
-benchmark_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "benchmark")
-algorithm = "origin"
-benchmark_folder = os.path.join("algorithm",algorithm)  
-benchmarks_list = utils.get_benchmark_list_from_file("benchlist-sim.txt")
+import argparse
 
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "-a", "--algorithm",
+    default="origin",
+    help="Algorithm subfolder name, e.g. origin",
+)
+parser.add_argument(
+    "-b", "--benchlist",
+    default="benchlist-sim.txt",
+    help="Benchmark list file, e.g. benchlist-sim.txt",
+)
+parser.add_argument(
+    "-t", "--tools",
+    nargs="+",
+    default=["quokka-gpmc", "quokka-ganak", "sliqsim", "quasimodo", "ddsim"],
+    help="Tools to run: quokka-gpmc quokka-ganak sliqsim quasimodo ddsim",
+)
+
+args = parser.parse_args()
+
+benchmark_path = os.path.join(
+    os.path.dirname(os.path.realpath(__file__)),
+    "benchmark",
+)
+
+algorithm = args.algorithm
+benchmark_folder = os.path.join("algorithm", algorithm)
+
+benchmarks_list = utils.get_benchmark_list_from_file(args.benchlist)
 benchmarks_list.sort()
-print(benchmarks_list)
-results_file_name = f"compare_simulations_{algorithm}_rebuttal_new_instances.csv"
+print("Benchmarks:", benchmarks_list)
+print("Tools:", args.tools)
+
+benchlist_base = os.path.splitext(os.path.basename(args.benchlist))[0]
+results_file_name = f"compare_simulations_{algorithm}_{benchlist_base}.csv"
+
 folder = "/"
 
 df_columns = ["qubits", "algo", "tool", "result", "time"]
@@ -107,6 +137,7 @@ def run_QuokkaSharp(file_name, tool):
         if utils.data_exists(run_data, results_df):
             continue
         start_time = time.time()
+        print(f"Running QuokkaSharp with {tool} on {file_path} with basis {basis}...")
         result = qk.functionalities.sim(file_path, basis, quokka_measurement)
         end_time = time.time()
         
@@ -205,7 +236,7 @@ def run_Quasimodo(file_name):
 		return False
 
 	cmd = [
-		"python3.10",
+		"python3.11",
 		QuaismodoPath,
 		"-f", file_path
   	]
@@ -311,11 +342,21 @@ def run_DDSim(file_name):
 
 for file in benchmarks_list:
     print(f"Processing {file}...")
-    run_QuokkaSharp(file, "gpmc")
-    run_QuokkaSharp(file, "ganak")
-    run_SliQSim(file)
-    run_Quasimodo(file)
-    run_DDSim(file)
+
+    if "quokka-gpmc" in args.tools:
+        run_QuokkaSharp(file, "gpmc")
+
+    if "quokka-ganak" in args.tools:
+        run_QuokkaSharp(file, "ganak")
+
+    if "sliqsim" in args.tools:
+        run_SliQSim(file)
+
+    if "quasimodo" in args.tools:
+        run_Quasimodo(file)
+
+    if "ddsim" in args.tools:
+        run_DDSim(file)
 
 
 remove_temp_folder()

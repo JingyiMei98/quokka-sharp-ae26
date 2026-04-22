@@ -1,0 +1,8 @@
+ham15-low.qasm
+ham15-med.qasm
+hwb10.qasm
+hwb12.qasm
+gf2^32_mult.qasm
+gf2^64_mult.qasm
+qcla_adder_10.qasm
+mod_mult_55.qasm

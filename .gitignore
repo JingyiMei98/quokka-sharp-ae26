@@ -4,3 +4,8 @@
 run_benchmarks/.DS_Store
 run_benchmarks/.DS_Store
 run_benchmarks/.DS_Store
+
+run_benchmarks/core
+core
+core.*
+*.bak
