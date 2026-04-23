@@ -1,0 +1,38 @@
+\begin{tabular}{lllllllll}
+\toprule
+ &  & \multicolumn{7}{r}{Run Time (sec)} \\
+ & tool & DDSim & Quasimodo & SliQSim & quokka-sharp-comp-ganak & quokka-sharp-comp-gpmc & quokka-sharp-pauli-ganak & quokka-sharp-pauli-gpmc \\
+algo & qubits &  &  &  &  &  &  &  \\
+\midrule
+dj_native_no_measure_1024 & 1024 & 1.098 & 1.073 & 2.408 & 0.858 & 0.062 & 0.788 & 0.058 \\
+\cline{1-9}
+dj_native_no_measure_2048 & 2048 & 5.041 & 1.481 & 10.768 & 2.732 & 0.175 & 2.570 & 0.148 \\
+\cline{1-9}
+dj_native_no_measure_512 & 512 & 0.448 & 0.894 & 0.232 & 0.227 & 0.029 & 0.207 & 0.056 \\
+\cline{1-9}
+ghz_native_no_measure_1024 & 1024 & 0.632 & 0.763 & 1.381 & 0.025 & 0.012 & 0.789 & 0.044 \\
+\cline{1-9}
+ghz_native_no_measure_2048 & 2048 & 1.971 & 0.791 & 3.252 & 0.070 & 0.023 & 3.627 & 0.111 \\
+\cline{1-9}
+ghz_native_no_measure_512 & 512 & 0.391 & 0.764 & 0.055 & 0.012 & 0.008 & 0.183 & 0.018 \\
+\cline{1-9}
+graphstate_native_no_measure_1024 & 1024 & 0.848 & 1.296 & 560.272 & 0.093 & 0.024 & 0.130 & 0.034 \\
+\cline{1-9}
+graphstate_native_no_measure_2048 & 2048 & 3.347 & 2.096 & 238.408 & 0.114 & 0.048 & 0.123 & 0.070 \\
+\cline{1-9}
+graphstate_native_no_measure_512 & 512 & 0.451 & 0.991 & 21.269 & 0.034 & 0.014 & 0.046 & 0.017 \\
+\cline{1-9}
+grover_native_no_measure_14 & 14 &  &  &  &  & TIMEOUT &  &  \\
+\cline{1-9}
+qaoa_native_no_measure_128 & 128 & 0.488 &  &  &  &  &  &  \\
+\cline{1-9}
+qaoa_native_no_measure_32 & 32 & 72.190 &  &  &  &  &  &  \\
+\cline{1-9}
+qaoa_native_no_measure_64 & 64 & 3.778 &  &  &  &  &  &  \\
+\cline{1-9}
+\multirow[t]{3}{*}{vqe_two} & 32 & 4.228 &  &  &  &  &  &  \\
+ & 64 & 1.001 &  &  &  &  &  &  \\
+ & 128 & 5.544 &  &  &  &  &  &  \\
+\cline{1-9}
+\bottomrule
+\end{tabular}
