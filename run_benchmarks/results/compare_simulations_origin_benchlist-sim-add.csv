@@ -69,3 +69,6 @@ qaoa_native_no_measure_64,64,DDSim,INTERRUPTED,3.7777602672576895
 vqe_two,32,DDSim,INTERRUPTED,4.227900981903076
 vqe_two,64,DDSim,INTERRUPTED,1.000908613204956
 vqe_two,128,DDSim,INTERRUPTED,5.543895959854126
+qaoa_native_no_measure_128,128,quokka-sharp-pauli-gpmc,TIMEOUT,600.6027619838715
+grover_native_no_measure_14,14,quokka-sharp-pauli-gpmc,TIMEOUT,603.984766960144
+grover_native_no_measure_15,15,quokka-sharp-pauli-gpmc,TIMEOUT,604.3119790554047
