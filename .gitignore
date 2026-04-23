@@ -9,3 +9,6 @@ run_benchmarks/__pycache__/OtherToolPath.cpython-311.pyc
 run_benchmarks/config_gpmc.json
 run_benchmarks/OtherToolPath.py
 run_benchmarks/config_ganak.json
+.DS_Store
+benchmark/.DS_Store
+benchmark/algorithm/.DS_Store
