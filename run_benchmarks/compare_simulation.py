@@ -220,7 +220,7 @@ def remove_temp_folder():
 def get_qubits_from_file(file_path):
     with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
         for line in f:
-            match = re.search(r"qreg q\[(\d+)\];", line)
+            match = re.search(r"qreg\s+(?:q|qubits)\[(\d+)\];", line)
             if match:
                 return int(match.group(1))
     return None
