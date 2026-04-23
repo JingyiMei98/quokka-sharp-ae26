@@ -1,6 +1,6 @@
 {
     "DEBUG": true,
-    "TIMEOUT": 2,
+    "TIMEOUT": 1800,
     "ToolInvocation": "/Quokka/GPMC/bin/ganak --mode=6",
     "D4ToolInvocation": "",
     "GetResult": "c s exact arb cpx (.+?)\\\\nc",
