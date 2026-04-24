@@ -131,8 +131,12 @@ def run_QuokkaSharp(file_name, mod, tool):
             continue
 		
         start_time = time.time()
-        result = qk.functionalities.eq(origin_file, mod_file, basis, quokka_checks[basis], N=quokka_threads[basis])
-        
+		try:
+        	result = qk.functionalities.eq(origin_file, mod_file, basis, quokka_checks[basis], N=quokka_threads[basis])
+        except Exception as e:
+            result = "ERROR"
+            print(f"QuokkaSharp ERROR with {tool}, basis={basis}, file={file_path}: {e}")
+
         end_time = time.time()
         print("")
         results_df = utils.add_result_to_df(run_data, result, end_time-start_time, results_df)
