@@ -7,6 +7,9 @@ ghz_native_no_measure_512.qasm
 graphstate_native_no_measure_1024.qasm
 graphstate_native_no_measure_2048.qasm
 graphstate_native_no_measure_512.qasm
+qwalk-noancilla_nativegates_ibm_qiskit_opt0_9.qasm
+qwalk-noancilla_nativegates_ibm_qiskit_opt0_10.qasm
+qwalk-noancilla_nativegates_ibm_qiskit_opt0_11.qasm
 grover_native_no_measure_14.qasm
 grover_native_no_measure_15.qasm
 grover_native_no_measure_16.qasm
