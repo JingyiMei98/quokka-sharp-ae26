@@ -1,5 +1,4 @@
 algo,qubits,tool,result,time
-gf2^32_mult,,quokka-sharp-comp-gpmc,TIMEOUT,2.444519281387329
 gf2^32_mult,96.0,quokka-sharp-pauli-ganak,TIMEOUT,1800.1966891288755
 gf2^32_mult,96.0,SliQSim,1.0,0.3943405151367187
 gf2^32_mult,96.0,Quasimodo,0.9999999999994056,0.9374206066131592
