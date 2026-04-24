@@ -56,7 +56,7 @@ folder = "/"
 df_columns = ["qubits", "algo", "tool", "result", "time"]
 
 # quokka_bases = ["comp", "pauli"]
-quokka_bases = ["pauli"]
+quokka_bases = ["comp"]
 
 quokka_measurement = "allzero"
 
