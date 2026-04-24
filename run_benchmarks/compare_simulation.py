@@ -138,8 +138,18 @@ def run_QuokkaSharp(file_name, tool):
             continue
         start_time = time.time()
         print(f"Running QuokkaSharp with {tool} on {file_path} with basis {basis}...")
-        result = qk.functionalities.sim(file_path, basis, quokka_measurement)
-        end_time = time.time()
+        try:
+            result = qk.functionalities.sim(file_path, basis, quokka_measurement)
+
+        except TimeoutError:
+            result = "TIMEOUT"
+
+        except Exception as e:
+            result = "ERROR"
+            print(f"QuokkaSharp ERROR with {tool}, basis={basis}, file={file_path}: {e}")
+
+        finally:
+            end_time = time.time()
         
         results_df = utils.add_result_to_df(run_data, result, end_time-start_time, results_df)
         utils.save_results_to_file(results_file_name, results_df)
