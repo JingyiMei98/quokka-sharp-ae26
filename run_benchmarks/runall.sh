@@ -42,7 +42,7 @@ run_py compare_simulation.py -a ModifiedRevlib -b benchlist-mrevlib.txt
 run_py compare_simulation.py -a revlib -b benchlist-revlib.txt
 
 echo "=== Equivalence checking ==="
-run_py compare_eqcheck.py -b benchlist-eq-phaseshift.txt -m shift4
+run_py compare_eqcheck.py -b benchlist-eq-phaseshift.txt -m shift4 -t quokka-gpmc quokka-ganak qcec
 run_py compare_eqcheck.py -b benchlist-eq-gatemissing.txt -m gm
 
 echo "=== Verification ==="
