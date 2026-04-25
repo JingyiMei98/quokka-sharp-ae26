@@ -1,3 +1,4 @@
-grover_native_no_measure_14.qasm
-grover_native_no_measure_15.qasm
-grover_native_no_measure_16.qasm
+ham15-low.qasm
+ham15-med.qasm
+gf2^64_mult.qasm
+gf2^256_mult.qasm
