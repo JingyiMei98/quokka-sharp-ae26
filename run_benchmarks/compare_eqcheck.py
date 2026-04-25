@@ -161,8 +161,8 @@ def _qcec_verify_worker(origin_file, mod_file, queue):
         from mqt import qcec
         from mqt.core import QuantumComputation
 
-        circ1 = QuantumComputation(origin_file)
-        circ2 = QuantumComputation(mod_file)
+        circ1 = QuantumComputation.from_qasm(origin_file)
+        circ2 = QuantumComputation.from_qasm(mod_file)
 
         v = qcec.verify(circ1, circ2)
         queue.put(v.equivalence)
