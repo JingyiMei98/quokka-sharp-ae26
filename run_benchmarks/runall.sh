@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+export LD_LIBRARY_PATH=/Quokka/Quasimodo/python_pkg:$LD_LIBRARY_PATH
+
 if [ $# -lt 1 ]; then
   echo "Usage: $0 <timeout>"
   exit 1
