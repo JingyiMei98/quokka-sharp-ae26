@@ -159,7 +159,7 @@ import multiprocessing as mp
 def _qcec_verify_worker(origin_file, mod_file, queue):
     try:
         from mqt import qcec
-        from mqt.core import QuantumComputation
+        from mqt.core.ir import QuantumComputation
 
         circ1 = QuantumComputation.from_qasm(origin_file)
         circ2 = QuantumComputation.from_qasm(mod_file)
