@@ -38,7 +38,7 @@ echo "=== Simulation results comparison ==="
 # run_py compare_simulation.py -a Feynman -b benchlist-feymann.txt
 run_py compare_simulation.py -a origin -b temp-origin.txt -c 2 -t quokka-gpmc quokka-ganak quasimodo ddsim
 run_py compare_simulation.py -a ModifiedRevLib -b temp-mrevlib-quokka.txt -t quokka-gpmc quokka-ganak
-run_py compare_simulation.py -a ModifiedRevlib -b temp-mrevLib-other.txt -t quasimodo ddsim sliqsim
+run_py compare_simulation.py -a ModifiedRevLib -b temp-mrevlib-other.txt -t quasimodo ddsim sliqsim
 run_py compare_simulation.py -a origin -b temp-grover-pauli.txt -c 1 -t quokka-gpmc quokka-ganak
 run_py compare_simulation.py -a Feynman -b temp-feynman-pauli.txt -c 1 -t quokka-gpmc quokka-ganak
 run_py compare_simulation.py -a Feynman -b temp-feynman-comp.txt -c 0 -t quokka-gpmc quokka-ganak
