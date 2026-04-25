@@ -33,6 +33,12 @@ parser.add_argument(
     help="Tools to run: quokka-gpmc quokka-ganak qcec sliqec",
 )
 
+parser.add_argument(
+    "-c", "--compbasis",
+    default=2,
+    help="computation basis for quokka-sharp, 0 for comp, 1 for pauli, 2 for both",
+)
+
 args = parser.parse_args()
 
 benchmark_folder = os.path.join("algorithm")
@@ -53,8 +59,13 @@ print("Benchmarks:", benchmarks_list)
 print("Modifications:", modifications)
 print("Results file:", results_file_name)
 
+if args.compbasis == "0":
+    quokka_bases = ["comp"]
+elif args.compbasis == "1":
+    quokka_bases = ["pauli"]
+elif args.compbasis == "2":     
+    quokka_bases = ["comp", "pauli"]
 
-quokka_bases = [ "comp"]
 quokka_checks = {
 	"comp": "cyclic",
 	"pauli": "linear"

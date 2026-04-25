@@ -26,6 +26,13 @@ parser.add_argument(
     default="benchlist-sim.txt",
     help="Benchmark list file, e.g. benchlist-sim.txt",
 )
+
+parser.add_argument(
+    "-c", "--compbasis",
+    default=2,
+    help="computation basis for quokka-sharp, 0 for comp, 1 for pauli, 2 for both",
+)
+
 parser.add_argument(
     "-t", "--tools",
     nargs="+",
@@ -55,8 +62,12 @@ folder = "/"
 
 df_columns = ["qubits", "algo", "tool", "result", "time"]
 
-# quokka_bases = ["comp", "pauli"]
-quokka_bases = ["comp"]
+if args.compbasis == "0":
+    quokka_bases = ["comp"]
+elif args.compbasis == "1":
+    quokka_bases = ["pauli"]
+elif args.compbasis == "2":     
+    quokka_bases = ["comp", "pauli"]
 
 quokka_measurement = "allzero"
 
