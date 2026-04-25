@@ -25,6 +25,14 @@ parser.add_argument(
     default=["shift4"],
     help="Modification folders to run, e.g. shift4 or opt gm",
 )
+
+parser.add_argument(
+    "-t", "--tools",
+    nargs="+",
+    default=["quokka-gpmc", "quokka-ganak", "qcec", "sliqec"],
+    help="Tools to run: quokka-gpmc quokka-ganak qcec sliqec",
+)
+
 args = parser.parse_args()
 
 benchmark_folder = os.path.join("algorithm")
@@ -131,11 +139,11 @@ def run_QuokkaSharp(file_name, mod, tool):
             continue
 		
         start_time = time.time()
-		try:
-        	result = qk.functionalities.eq(origin_file, mod_file, basis, quokka_checks[basis], N=quokka_threads[basis])
+        try:
+            result = qk.functionalities.eq(origin_file, mod_file, basis, quokka_checks[basis], N=quokka_threads[basis])
         except Exception as e:
             result = "ERROR"
-            print(f"QuokkaSharp ERROR with {tool}, basis={basis}, file={file_path}: {e}")
+            print(f"QuokkaSharp ERROR with {tool}, basis={basis}, file={file_name}: {e}")
 
         end_time = time.time()
         print("")
@@ -187,6 +195,7 @@ def run_QCEC(file_name, mod):
     else:
         out = q.get()
         if isinstance(out, Exception):
+            print(f"QCEC ERROR with file={file_name}, mod={mod}: {out}")
             result = "ERROR"
         else:
             result = (str(out) == "EquivalenceCriterion.equivalent_up_to_global_phase")
@@ -280,34 +289,37 @@ pbar = tqdm(total=total, desc="All runs", unit="run")
 
 
 def main():
-	for file in benchmarks_list:
-		new = False
-		for mod in modifications:
-			print(file)
-			# # # QuokkaSharp gpmc
-			# t0 = time.perf_counter()
-			# new |= run_QuokkaSharp(file, mod, "gpmc")
-			# dt = time.perf_counter() - t0
-			# print(f"[DONE] file={file}, mod={mod}, tool=gpmc, time={dt:.2f}s")
+    for file in benchmarks_list:
+        new = False
+        for mod in modifications:
+            print(file)
+            if "quokka-gpmc" in args.tools:
+                t0 = time.perf_counter()
+                new |= run_QuokkaSharp(file, mod, "gpmc")
+                dt = time.perf_counter() - t0
+                print(f"[DONE] file={file}, mod={mod}, tool=gpmc, time={dt:.2f}s")
 
-			# # QuokkaSharp ganak
-			# t0 = time.perf_counter()
-			# new |= run_QuokkaSharp(file, mod, "ganak")
-			# dt = time.perf_counter() - t0
-			# print(f"[DONE] file={file}, mod={mod}, tool=ganak, time={dt:.2f}s")
+			# QuokkaSharp ganak
+            if "quokka-ganak" in args.tools:
+                t0 = time.perf_counter()
+                new |= run_QuokkaSharp(file, mod, "ganak")
+                dt = time.perf_counter() - t0
+                print(f"[DONE] file={file}, mod={mod}, tool=ganak, time={dt:.2f}s")
 
 			# SliQEC
-			t0 = time.perf_counter()
-			new |= run_SliQEC(file, mod)
-			dt = time.perf_counter() - t0
-			print(f"[DONE] file={file}, mod={mod}, tool=SliQEC, time={dt:.2f}s")
+            if "sliqec" in args.tools:
+                t0 = time.perf_counter()
+                new |= run_SliQEC(file, mod)
+                dt = time.perf_counter() - t0
+                print(f"[DONE] file={file}, mod={mod}, tool=SliQEC, time={dt:.2f}s")
 
 			# qcec
-			t0 = time.perf_counter()
-			new |= run_QCEC(file, mod)
-			dt = time.perf_counter() - t0
-			print(f"[DONE] file={file}, mod={mod}, tool=qcec, time={dt:.2f}s")
-		
+            if "qcec" in args.tools:
+                t0 = time.perf_counter()
+                new |= run_QCEC(file, mod)
+                dt = time.perf_counter() - t0
+                print(f"[DONE] file={file}, mod={mod}, tool=qcec, time={dt:.2f}s")
+
 
 if __name__ == "__main__":
     mp.freeze_support()  
