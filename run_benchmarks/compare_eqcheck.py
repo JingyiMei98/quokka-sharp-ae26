@@ -159,12 +159,16 @@ import multiprocessing as mp
 def _qcec_verify_worker(origin_file, mod_file, queue):
     try:
         from mqt import qcec
+        from mqt.core import QuantumComputation
         from mqt.qcec.pyqcec import Configuration
+
+        circ1 = QuantumComputation(origin_file)
+        circ2 = QuantumComputation(mod_file)
 
         config = Configuration()
         config.execution.run_zx_checker = False
 
-        v = qcec.verify(origin_file, mod_file, configuration=config)
+        v = qcec.verify(circ1, circ2, config)
         queue.put(v.equivalence)
 
     except Exception as e:
