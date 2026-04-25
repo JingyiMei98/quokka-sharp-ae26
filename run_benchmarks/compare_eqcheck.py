@@ -284,17 +284,17 @@ def main():
 		new = False
 		for mod in modifications:
 			print(file)
-			# # QuokkaSharp gpmc
-			t0 = time.perf_counter()
-			new |= run_QuokkaSharp(file, mod, "gpmc")
-			dt = time.perf_counter() - t0
-			print(f"[DONE] file={file}, mod={mod}, tool=gpmc, time={dt:.2f}s")
+			# # # QuokkaSharp gpmc
+			# t0 = time.perf_counter()
+			# new |= run_QuokkaSharp(file, mod, "gpmc")
+			# dt = time.perf_counter() - t0
+			# print(f"[DONE] file={file}, mod={mod}, tool=gpmc, time={dt:.2f}s")
 
-			# QuokkaSharp ganak
-			t0 = time.perf_counter()
-			new |= run_QuokkaSharp(file, mod, "ganak")
-			dt = time.perf_counter() - t0
-			print(f"[DONE] file={file}, mod={mod}, tool=ganak, time={dt:.2f}s")
+			# # QuokkaSharp ganak
+			# t0 = time.perf_counter()
+			# new |= run_QuokkaSharp(file, mod, "ganak")
+			# dt = time.perf_counter() - t0
+			# print(f"[DONE] file={file}, mod={mod}, tool=ganak, time={dt:.2f}s")
 
 			# SliQEC
 			t0 = time.perf_counter()
