@@ -158,7 +158,8 @@ import multiprocessing as mp
 
 def _qcec_verify_worker(origin_file, mod_file, queue):
     try:
-        from mqt.qcec import Configuration
+        from mqt import qcec
+        from mqt.qcec.pyqcec import Configuration
 
         config = Configuration()
         config.execution.run_zx_checker = False
