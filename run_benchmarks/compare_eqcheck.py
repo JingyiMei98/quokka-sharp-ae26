@@ -158,8 +158,14 @@ import multiprocessing as mp
 
 def _qcec_verify_worker(origin_file, mod_file, queue):
     try:
-        v = qcec.verify(origin_file, mod_file, run_zx_checker=False)
+        from mqt.qcec import Configuration
+
+        config = Configuration()
+        config.execution.run_zx_checker = False
+
+        v = qcec.verify(origin_file, mod_file, configuration=config)
         queue.put(v.equivalence)
+
     except Exception as e:
         queue.put(e)
 
