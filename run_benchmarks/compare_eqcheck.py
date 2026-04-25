@@ -160,11 +160,16 @@ def _qcec_verify_worker(origin_file, mod_file, queue):
     try:
         from mqt import qcec
         from mqt.core.ir import QuantumComputation
+        from mqt.qcec.pyqcec import Configuration
+
 
         circ1 = QuantumComputation.from_qasm(origin_file)
         circ2 = QuantumComputation.from_qasm(mod_file)
 
-        v = qcec.verify(circ1, circ2)
+        config = Configuration()
+        config.execution.run_zx_checker = False
+
+        v = qcec.verify(circ1, circ2, config)
         queue.put(v.equivalence)
 
     except Exception as e:
