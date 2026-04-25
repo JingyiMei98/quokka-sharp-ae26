@@ -1,5 +1,5 @@
 {
-    "DEBUG": true,
+    "DEBUG": false,
     "TIMEOUT": 1800,
     "ToolInvocation": "/Quokka/GPMC/bin/ganak --mode=6",
     "D4ToolInvocation": "",
