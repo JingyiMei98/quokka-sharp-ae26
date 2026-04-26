@@ -3,9 +3,8 @@ from time import time
 import os
 import csv
 
-def main():
+def main(basis):
     qasmfile = "../benchmark/algorithm/origin/qwalk-v-chain_nativegates_ibm_qiskit_opt0_5.qasm"
-    basis = "comp"
     pre = {4: 0}
     post = {4: 0}
 
@@ -36,4 +35,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    for basis in ["comp", "pauli"]:
+        main(basis)
