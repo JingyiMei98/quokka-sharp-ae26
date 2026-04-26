@@ -104,7 +104,7 @@ def interpreter_quasimodo(args):
         elif gate == 'm':
             a = 1
         else:
-            sys.exit('Unknown gate: '+ element[0])
+            raise ValueError(f"Unknown gate: {element[0]}")
     
     b = dict()
     for i in range(0, n):
