@@ -40,7 +40,8 @@ echo "=== Simulation results comparison ==="
 # run_py compare_simulation.py -a Feynman -b benchlist-feymann.txt
 run_py compare_simulation.py -a origin -b benchlist-sim.txt -t quokka-gpmc quokka-ganak quasimodo ddsim
 run_py compare_simulation.py -a origin -b benchlist-sim-add.txt
-run_py compare_simulation.py -a ModifiedRevlib -b benchlist-mrevlib.txt
+run_py compare_simulation.py -a Feynman -b benchlist-feymann.txt
+run_py compare_simulation.py -a ModifiedRevLib -b benchlist-mrevlib.txt
 run_py compare_simulation.py -a revlib -b benchlist-revlib.txt
 
 echo "=== Equivalence checking ==="
