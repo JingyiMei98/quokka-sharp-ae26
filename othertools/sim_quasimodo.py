@@ -91,7 +91,7 @@ def interpreter_quasimodo(args):
             k = int(element[1])
             qc.t(k)
         elif 'rx' in gate:
-            theta = float(element[1])
+            theta = float(element[1]) / math.pi
             k = int(element[2])
             qc.h(k)
             qc.p(k, theta)
