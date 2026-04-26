@@ -2,7 +2,6 @@ import quokka_sharp as qk
 import tempfile
 import argparse
 import os
-import sympy as sy
 
 parser = argparse.ArgumentParser(description="QuokkaSharp Synthesis Script")
 parser.add_argument("--tmp", type=str, required=True, help="Path to write CNFs")
