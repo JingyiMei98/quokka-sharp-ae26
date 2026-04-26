@@ -1,3 +1,4 @@
+import cmd
 from concurrent.futures import process
 import shutil
 import os, time
@@ -249,39 +250,71 @@ def get_qubits_from_file(file_path):
     return None
 
 def run_Quasimodo(file_name):
-	results_df = get_results()
-	file_path = utils.get_file_path(file, folder, benchmark_folder)
-	algo_name, qubits = utils.get_data_from_algo_file_name(file_name)
-	if not qubits:
-		qubits = get_qubits_from_file(file_path)
-	run_data = get_run_data(algo_name, qubits, "Quasimodo")
-	if utils.data_exists(run_data, results_df):
-		return False
+    results_df = get_results()
+    file_path = utils.get_file_path(file_name, folder, benchmark_folder)
 
-	cmd = [
-		"python3.10",
-		QuaismodoPath,
-		"-f", file_path
-  	]
-	try:
-		start_time = time.time()
-		output = subprocess.check_output(cmd, universal_newlines=True, timeout=utils.timeout)
-		end_time = time.time()
-	except subprocess.TimeoutExpired:
-		end_time = time.time()
-		result = "TIMEOUT"
-		runtime = end_time - start_time
-	else:
-		result_matches = re.search(r"\s*([-\d.e]+)\s", output)
-		assert result_matches is not None, f"Could not find result in Quasimodo output:\n{output}"
-		assert len(result_matches.groups()) == 1, f"Expected one result match, got {len(result_matches.groups())} in output:\n{output}"
-		runtime = end_time - start_time
-		print("Quasimodo", "runtime:", runtime, "result:", result_matches.group(1))
-		result = float(result_matches.group(1))
+    algo_name, qubits = utils.get_data_from_algo_file_name(file_name)
+    if not qubits:
+        qubits = get_qubits_from_file(file_path)
 
-	results_df = utils.add_result_to_df(run_data, result, runtime, results_df)
-	utils.save_results_to_file(results_file_name, results_df)
-	return True	
+    run_data = get_run_data(algo_name, qubits, "Quasimodo")
+    if utils.data_exists(run_data, results_df):
+        return False
+
+    cmd = [
+        "python3.10",
+        QuaismodoPath,
+        "-f", file_path,
+    ]
+
+    start_time = time.time()
+
+    try:
+        output = subprocess.check_output(
+            cmd,
+            universal_newlines=True,
+            stderr=subprocess.STDOUT,  # capture assertion/error output
+            timeout=utils.timeout,
+        )
+        end_time = time.time()
+        runtime = end_time - start_time
+
+        result_matches = re.search(r"\s*([-\d.e]+)\s", output)
+        if result_matches is None:
+            print(f"Could not find result in Quasimodo output:\n{output}")
+            result = "ERROR"
+        else:
+            print("Quasimodo", "runtime:", runtime, "result:", result_matches.group(1))
+            result = float(result_matches.group(1))
+
+    except subprocess.TimeoutExpired as e:
+        end_time = time.time()
+        runtime = end_time - start_time
+        result = "TIMEOUT"
+
+        if e.output:
+            print(f"Quasimodo TIMEOUT output for {file_name}:\n{e.output}")
+
+    except subprocess.CalledProcessError as e:
+        end_time = time.time()
+        runtime = end_time - start_time
+        result = "ERROR"
+
+        print(f"Quasimodo ERROR on {file_name}: return code {e.returncode}")
+
+        with open("quasimodo_errors.log", "a") as log:
+            log.write(f"\n=== Quasimodo ERROR: {file_name} ===\n")
+            log.write(e.output or "")
+
+    except Exception as e:
+        end_time = time.time()
+        runtime = end_time - start_time
+        result = "ERROR"
+        print(f"Quasimodo unexpected ERROR on {file_name}: {e}")
+
+    results_df = utils.add_result_to_df(run_data, result, runtime, results_df)
+    utils.save_results_to_file(results_file_name, results_df)
+    return True
 
 import subprocess
 import time

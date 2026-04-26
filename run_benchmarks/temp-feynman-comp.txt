@@ -1,3 +1,0 @@
-ham15-low.qasm
-ham15-med.qasm
-gf2^64_mult.qasm

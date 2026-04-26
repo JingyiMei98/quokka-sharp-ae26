@@ -1,7 +1,0 @@
-{
-    "DEBUG": false,
-    "TIMEOUT": 3600,
-    "ToolInvocation": "/Quokka/GPMC/bin/gpmc -mode=1",
-    "GetResult": "exact.double.prec-sci.(.+?)\\\\nc s"
-  }
-  
