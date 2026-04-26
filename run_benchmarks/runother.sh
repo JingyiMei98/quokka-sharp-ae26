@@ -46,3 +46,5 @@ run_py compare_simulation.py -a origin -b temp-sim-ddsim.txt -t ddsim
 run_py compare_simulation.py -a origin -b temp-sim-quasimodo.txt -t quasimodo
 run_py compare_simulation.py -a origin -b temp-sim-sliqsim.txt -t sliqsim
 
+echo "=== Equivalence checking ==="
+run_py compare_eqcheck.py -b benchlist-eq-gatemissing.txt -m gm
