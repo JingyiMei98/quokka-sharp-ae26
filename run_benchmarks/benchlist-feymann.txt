@@ -4,5 +4,3 @@ hwb10.qasm
 hwb12.qasm
 gf2^64_mult.qasm
 gf2^256_mult.qasm
-qcla_adder_10.qasm
-mod_mult_55.qasm
