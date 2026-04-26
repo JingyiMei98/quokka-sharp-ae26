@@ -277,7 +277,7 @@ def run_Quasimodo(file_name):
 		assert len(result_matches.groups()) == 1, f"Expected one result match, got {len(result_matches.groups())} in output:\n{output}"
 		runtime = end_time - start_time
 		print("Quasimodo", "runtime:", runtime, "result:", result_matches.group(1))
-		result = float(result_matches.group(1))**2
+		result = float(result_matches.group(1))
 
 	results_df = utils.add_result_to_df(run_data, result, runtime, results_df)
 	utils.save_results_to_file(results_file_name, results_df)

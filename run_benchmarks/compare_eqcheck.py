@@ -59,6 +59,8 @@ print("Benchmarks:", benchmarks_list)
 print("Modifications:", modifications)
 print("Results file:", results_file_name)
 
+quokka_bases = ["comp", "pauli"]
+
 if args.compbasis == "0":
     quokka_bases = ["comp"]
 elif args.compbasis == "1":
