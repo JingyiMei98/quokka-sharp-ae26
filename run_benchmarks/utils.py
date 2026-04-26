@@ -254,3 +254,36 @@ def add_result_to_df(data_dict, result, time_taken, df, memory=None):
 
 	return pd.concat([old_df, new_df], ignore_index=True)
 
+import re
+
+def get_qubits_and_gate_count_from_file(file_path):
+    total_qubits = 0
+    gate_count = 0
+
+    skip_prefixes = (
+        "OPENQASM", "include", "qreg", "creg", "qubit", "bit",
+        "measure", "barrier", "reset", "//"
+    )
+
+    with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+        for line in f:
+            stripped = line.strip()
+
+            if not stripped:
+                continue
+
+            match = re.search(r"^\s*qreg\s+([A-Za-z_]\w*)\[(\d+)\]\s*;", line)
+            if match:
+                total_qubits += int(match.group(2))
+                continue
+
+            if any(stripped.startswith(prefix) for prefix in skip_prefixes):
+                continue
+
+            if stripped.startswith("gate ") or stripped.startswith("opaque "):
+                continue
+
+            if stripped.endswith(";"):
+                gate_count += 1
+
+    return (total_qubits if total_qubits > 0 else None), gate_count
