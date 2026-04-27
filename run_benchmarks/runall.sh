@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
 export LD_LIBRARY_PATH="/Quokka/Quasimodo/python_pkg:${LD_LIBRARY_PATH:-}"
-export QUOKKA_CONFIG="${SCRIPT_DIR}/config_gpmc.json"
+
+GPMC_CONFIG="${SCRIPT_DIR}/config_gpmc.json"
+GANAK_CONFIG="${SCRIPT_DIR}/config_ganak.json"
+export QUOKKA_CONFIG="$GPMC_CONFIG"
 
 if [ $# -lt 1 ]; then
   echo "Usage: $0 <timeout>"
@@ -23,6 +26,13 @@ command -v jq >/dev/null 2>&1 || {
   exit 1
 }
 
+for f in "$GPMC_CONFIG" "$GANAK_CONFIG"; do
+  if [ ! -f "$f" ]; then
+    echo "Error: config file not found: $f"
+    exit 1
+  fi
+done
+
 update_timeout() {
   local file="$1"
   local tmp="${file}.tmp"
@@ -34,10 +44,13 @@ run_py() {
   python3.11 "$@"
 }
 
-update_timeout config_gpmc.json
-update_timeout config_ganak.json
+update_timeout "$GPMC_CONFIG"
+update_timeout "$GANAK_CONFIG"
 
 echo "Updated TIMEOUT to $TIMEOUT"
+echo "Using QUOKKA_CONFIG=$QUOKKA_CONFIG"
+
+cd "$SCRIPT_DIR"
 
 echo "=== Simulation results comparison ==="
 # run_py compare_simulation.py -a Feynman -b benchlist-feymann.txt
