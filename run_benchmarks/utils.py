@@ -235,7 +235,7 @@ def add_result_to_df(data_dict, result, time_taken, df, memory=None):
 
 	if result == "ERROR - unknown error":
 		print("Error for data_dict\n", data_dict)
-		return df
+		result = "ERROR"
 
 	new_data = data_dict.copy()
 	new_data["result"] = str(result)
