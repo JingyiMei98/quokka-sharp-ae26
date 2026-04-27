@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-export LD_LIBRARY_PATH="/Quokka/Quasimodo/python_pkg:${LD_LIBRARY_PATH:-}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+export LD_LIBRARY_PATH="/Quokka/Quasimodo/python_pkg:${LD_LIBRARY_PATH:-}"
 export QUOKKA_CONFIG="${SCRIPT_DIR}/config_gpmc.json"
 
 if [ $# -lt 1 ]; then
