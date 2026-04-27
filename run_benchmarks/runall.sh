@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-export LD_LIBRARY_PATH=/Quokka/Quasimodo/python_pkg:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH="/Quokka/Quasimodo/build:${LD_LIBRARY_PATH:-}"
 
 export QUOKKA_CONFIG=config_gpmc.json
 
