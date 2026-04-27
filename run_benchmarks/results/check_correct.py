@@ -8,6 +8,14 @@ from collections import defaultdict
 NON_NUMERIC = {"TIMEOUT", "ERROR", "N/S", "--", ""}
 
 
+def normalize_qubits(q: str) -> str:
+    q = q.strip()
+    try:
+        return str(int(float(q)))
+    except ValueError:
+        return q
+
+
 def parse_result(x: str):
     x = x.strip()
     if x in NON_NUMERIC:
@@ -67,7 +75,7 @@ def main():
 
         for row in reader:
             algo = row["algo"].strip()
-            qubits = row["qubits"].strip()
+            qubits = normalize_qubits(row["qubits"])
             tool = row["tool"].strip()
             result = parse_result(row["result"])
             time = row["time"].strip()
