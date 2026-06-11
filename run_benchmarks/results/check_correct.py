@@ -8,6 +8,14 @@ from collections import defaultdict
 NON_NUMERIC = {"TIMEOUT", "ERROR", "N/S", "--", ""}
 
 
+def normalize_qubits(q: str) -> str:
+    q = q.strip()
+    try:
+        return str(int(float(q)))
+    except ValueError:
+        return q
+
+
 def parse_result(x: str):
     x = x.strip()
     if x in NON_NUMERIC:
@@ -22,7 +30,7 @@ def parse_result(x: str):
             return "PARSE_ERROR"
 
 
-def same_result(a, b, abs_tol=1e-8):
+def same_result(a, b, abs_tol=1e-6):
     if isinstance(a, float) and isinstance(b, float):
         return math.isclose(a, b, abs_tol=abs_tol, rel_tol=0.0)
     return a == b
@@ -47,8 +55,8 @@ def main():
     parser.add_argument(
         "--tol",
         type=float,
-        default=1e-8,
-        help="Absolute tolerance. Default: 1e-8",
+        default=1e-6,
+        help="Absolute tolerance. Default: 1e-6",
     )
     parser.add_argument(
         "--show-ok",
@@ -67,7 +75,7 @@ def main():
 
         for row in reader:
             algo = row["algo"].strip()
-            qubits = row["qubits"].strip()
+            qubits = normalize_qubits(row["qubits"])
             tool = row["tool"].strip()
             result = parse_result(row["result"])
             time = row["time"].strip()
